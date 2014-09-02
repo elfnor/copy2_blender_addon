@@ -9,11 +9,11 @@ The add-on copies an object to either the selected vertices, edges or faces of a
 
 ![radiolaria](images/radiolaria.png)
 
-To produce this image an icosphere with a single subdivision was used as the destination object. The spike is an edited cone and was copied to the vertexes, the silver torus was copied to the faces and the gold rings to the edges of the icosphere. The icosphere was then deleted.
+To produce this image an icosphere with a single subdivision was used as the destination object. The spike is an edited cone and was copied to the vertices, the silver torus was copied to the faces and the gold rings to the edges of the icosphere. The icosphere was then deleted.
 
 By making use of the random select in edit mode prior to using Copy 2 and the randomize transform afterwards, the add-on can be used to quickly greeble objects.
 
-It can also be used to make ball and stick models of a mesh. Copy a sphere to the vertices and a cylinder to the edges. When copy to an edge is selected the option to scale an object to the edge length is given.
+It can also be used to make ball and stick models of a mesh. Copy a sphere to the vertices and a cylinder to the edges. When copy to an edge is selected, the additional option to scale an object to the edge length is given.
 
 ![twisted torus](images/twisted_torus.png)
 
@@ -28,7 +28,7 @@ Create a destination object, use `CTRL-A` to apply any scale and rotation to the
 In `EDIT` mode select the vertices, edges or faces to which you want to copy the source object.  
 
 Create a source object,  
-In `EDIT` mode move the object relative to the object origin, the object origin is the point that is copied onto the mesh.  
+In `EDIT` mode move the object relative to the object origin. The object origin is the point that is copied onto the mesh.  
 In `OBJECT` mode use `CTRL-A` to apply any scale and rotation to the source object.  
 
 Select the destination object, and run the add-on, `Object > Copy 2`.  
