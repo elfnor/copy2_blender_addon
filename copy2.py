@@ -125,13 +125,10 @@ def unregister() :
 def copy_to_from(scene, to_obj, from_obj, copymode, axes, edgescale, scale):
     if copymode == 'V':
         copy_list = vertex_copy(scene, to_obj, from_obj, axes)
-        print('v')
     if copymode == 'E':
         copy_list = edge_copy(scene, to_obj, from_obj, axes, edgescale, scale)
-        print('e')
     if copymode == 'F':
         copy_list = face_copy(scene, to_obj, from_obj,axes)
-        print('f')
     return copy_list
   
 axes_dict = {'XY': (1,2,0), 
