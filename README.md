@@ -20,7 +20,7 @@ It can also be used to make ball and stick models of a mesh. Copy a sphere to th
 Basic steps
 ----------
 
-![screenshot](images/screeenshot.png)
+![screenshot](images/screenshot.png)
 
 Install the add-on through the User Preferences dialog.
 
