@@ -18,13 +18,13 @@
 #  ***** END GPL LICENSE BLOCK *****
 
 bl_info = {
-    "name": "Copy2 vertices, edges or faces",
+    "name": "VIEW3D_OT_copy2 vertices, edges or faces",
     "author": "Eleanor Howick (elfnor.com)",
     "version": (0, 1),
     "blender": (2,71,0),
     "location": "3D View > Object > Copy 2",
     "description": "Copy one object to the selected vertices, edges or faces of another object",
-    "warning": ""
+    "warning": "",
     "category": "Object",
 }
 
@@ -102,7 +102,7 @@ class Copy2(bpy.types.Operator) :
     def invoke(self, context, event):
         Copy2.obj_list = [(obj.name, obj.name, obj.name) for obj in bpy.data.objects]
         return {"FINISHED"}
-#end Copy2 class
+#end VIEW3D_OT_copy2 class
 
 #---------------------------------------------------------------------------------------
  
