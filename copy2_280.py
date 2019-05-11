@@ -21,7 +21,7 @@ bl_info = {
     "name": "copy2 vertices, edges or faces",
     "author": "Eleanor Howick (elfnor.com)",
     "version": (0, 2),
-    "blender": (2,80,0),
+    "blender": (2,80,61),
     "location": "3D View > Object > Copy 2",
     "description": "Copy one object to the selected vertices, edges or faces of another object",
     "warning": "",
@@ -121,7 +121,7 @@ def add_to_menu(self, context):
 
 def register():
     bpy.utils.register_class(VIEW3D_OT_copy2)
-    bpy.types.VIEW3D_MT_object_specials.prepend(add_to_menu)
+    bpy.types.VIEW3D_MT_object_context_menu.prepend(add_to_menu)
     bpy.types.VIEW3D_MT_object.append(add_to_menu)
     return
 
@@ -129,7 +129,7 @@ def register():
 def unregister():
     bpy.utils.unregister_class(VIEW3D_OT_copy2)
     bpy.types.VIEW3D_MT_object.remove(add_to_menu)
-    bpy.types.VIEW3D_MT_object_specials.remove(add_to_menu)
+    bpy.types.VIEW3D_MT_object_context_menu.remove(add_to_menu)
     return
 
 
