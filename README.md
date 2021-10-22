@@ -1,6 +1,13 @@
 copy2 blender add-on
 ===================
 
+Updates
+copy2.py is for Blender 2.7
+copy2_280.py works for 2.8 through to at least Blender 2.93
+
+![screenshot](images/screenshot_293.png)
+-------
+
 After forgetting about it for a few years I found my old "copy 2" blender python script. (there's an old thread [here](http://blenderartists.org/forum/showthread.php?193616-Copy-object-to-face-edge-or-vertex-script-%28updated-to-2-5-3-1%29)).
 
 I've completely rewritten it into a proper add-on with a panel interface. It now works in Blender 2.71.
