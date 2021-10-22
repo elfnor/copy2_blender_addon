@@ -1,7 +1,7 @@
 copy2 blender add-on
 ===================
 
-Updates
+Updates  
 copy2.py is for Blender 2.7  
 copy2_280.py works for 2.8 through to at least Blender 2.93  
 
