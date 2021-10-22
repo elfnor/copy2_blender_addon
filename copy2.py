@@ -18,7 +18,7 @@
 #  ***** END GPL LICENSE BLOCK *****
 
 bl_info = {
-    "name": "VIEW3D_OT_copy2 vertices, edges or faces",
+    "name": "copy2 vertices, edges or faces",
     "author": "Eleanor Howick (elfnor.com)",
     "version": (0, 1),
     "blender": (2,71,0),
