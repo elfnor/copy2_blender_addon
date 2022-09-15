@@ -20,8 +20,8 @@
 bl_info = {
     "name": "copy2 vertices, edges or faces",
     "author": "Eleanor Howick (elfnor.com)",
-    "version": (0, 2),
-    "blender": (2,80,61),
+    "version": (0, 3),
+    "blender": (3, 2, 0),
     "location": "3D View > Object > Copy 2",
     "description": "Copy one object to the selected vertices, edges or faces of another object",
     "warning": "",
@@ -29,8 +29,10 @@ bl_info = {
 }
 
 import bpy
+import numpy as np
 
 from mathutils import Vector, Matrix
+from mathutils.geometry import distance_point_to_plane
 
 
 class VIEW3D_OT_copy2(bpy.types.Operator):
@@ -73,6 +75,8 @@ class VIEW3D_OT_copy2(bpy.types.Operator):
     edgescale: bpy.props.BoolProperty(name="Scale to fill edge?")
     scale: bpy.props.FloatProperty(default=1.0, min=0.0)
 
+    maxdist: bpy.props.BoolProperty(name="secondary axis to furthest vertex")
+
     def execute(self, context):
 
         copytoobject = context.active_object.name
@@ -85,6 +89,7 @@ class VIEW3D_OT_copy2(bpy.types.Operator):
             axes,
             self.edgescale,
             self.scale,
+            self.maxdist,
         )
 
         return {"FINISHED"}
@@ -100,6 +105,9 @@ class VIEW3D_OT_copy2(bpy.types.Operator):
         if self.copytype == "E":
             layout.prop(self, "edgescale", text="scale to fit edge")
             layout.prop(self, "scale")
+
+        if self.copytype == "F":
+            layout.prop(self, "maxdist", text="sec axis to furthest vert")
 
         return
 
@@ -137,7 +145,7 @@ def unregister():
 # copying functions
 
 
-def copy_to_from(scene, to_obj, from_obj, copymode, axes, edgescale, scale):
+def copy_to_from(scene, to_obj, from_obj, copymode, axes, edgescale, scale, maxdist):
     """
     selct copying function based on user selection of vertex, edge or face copy mode
     """
@@ -146,7 +154,7 @@ def copy_to_from(scene, to_obj, from_obj, copymode, axes, edgescale, scale):
     if copymode == "E":
         return edge_copy(scene, to_obj, from_obj, axes, edgescale, scale)
     if copymode == "F":
-        return face_copy(scene, to_obj, from_obj, axes)
+        return face_copy(scene, to_obj, from_obj, axes, maxdist)
     return None
 
 
@@ -161,11 +169,11 @@ axes_dict = {
 
 
 def copyto(scene, source_obj, pos, xdir, zdir, axes, scale=None):
-    """ 
-     generic copy function for all copy modes
-     copy the source_obj to pos, so its primary axis points in zdir and its 
-     secondary axis points in xdir       
-     """
+    """
+    generic copy function for all copy modes
+    copy the source_obj to pos, so its primary axis points in zdir and its
+    secondary axis points in xdir
+    """
     copy_obj = source_obj.copy()
     scene.collection.objects.link(copy_obj)
 
@@ -283,7 +291,7 @@ def edge_copy(scene, obj, source_obj, axes, es, scale):
     return copy_list
 
 
-def face_copy(scene, obj, source_obj, axes):
+def face_copy(scene, obj, source_obj, axes, maxdist):
     # face select mode
     sel_faces = []
     copy_list = []
@@ -292,8 +300,17 @@ def face_copy(scene, obj, source_obj, axes):
             sel_faces.append(f)
     for f in sel_faces:
         fco = f.center @ obj.matrix_world.transposed()
-        # get first vertex corner of transformed object
-        vco = obj.data.vertices[f.vertices[0]].co @ obj.matrix_world.transposed()
+        if maxdist:
+            dists = []
+            for v in f.vertices:
+                test_line = obj.data.vertices[v].co - f.center
+                dists.append(test_line.magnitude)
+
+            imax = np.array(dists).argmax()
+            vco = obj.data.vertices[f.vertices[imax]].co @ obj.matrix_world.transposed()
+        else:
+            # get first vertex corner of transformed object
+            vco = obj.data.vertices[f.vertices[0]].co @ obj.matrix_world.transposed()
         # get face normal of transformed object
         fn = (f.center + f.normal) @ obj.matrix_world.transposed() - fco
         fn = fn.normalized()
